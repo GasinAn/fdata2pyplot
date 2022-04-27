@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+
+# TXT files
+*.txt
+
+# Python scripts
+*.py
