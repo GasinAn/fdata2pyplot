@@ -14,13 +14,12 @@ No Parameters
 No Returns
 
 subroutine plt_add_data(py_arr_name, fortran_arr, txt_name)
-Save Fortran array fortran_arr to file txt_name.txt.
-Add this in Python script:
-    exec(f"{py_arr_name} = np.loadtxt('{txt_name}.txt')")
+Save Fortran array fortran_arr to file txt_name.txt
+Add this in Python script: exec(f"{py_arr_name} = np.loadtxt('{txt_name}.txt')")
 Parameters
     py_arr_name: character.
     fortran_arr: 1d or 2d real array (any kind in iso_fortran_env).
-    txt_name: character, optional.
+    txt_name: character, optional (default: py_arr_name).
 No Returns
 ```
 
