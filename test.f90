@@ -14,5 +14,5 @@ program test
     call plt_init()
     call plt_add_data('x', x)
     call plt_add_data('y', y)
-    call plt_add_data('z', z)
+    call plt_add_data('z', z, 'Gaussian')
 end program test
