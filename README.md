@@ -58,7 +58,7 @@ y = np.loadtxt('y.txt')
 z = np.loadtxt('Gaussian.txt')
 ```
 
-If a "axis square contourf" is wanted, these can be added:
+For example, if a "axis square contourf" is wanted, these can be added:
 
 ```python
 plt.contourf(x, y, z)
