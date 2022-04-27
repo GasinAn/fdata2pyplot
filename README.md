@@ -31,7 +31,8 @@ program test
     use pyplot
     implicit none
     integer :: i, j
-    real(sp) :: x(-500:500), y(-500:500), z(-500:500,-500:500)
+    real(sp) :: x(-500:500), y(-500:500)
+    real(dp) :: z(-500:500,-500:500)
     x = [(real(i,sp), i=-500,500)]/500.0_sp*3.0_sp
     y = [(real(j,sp), j=-500,500)]/500.0_sp*3.0_sp
     do i = -500, 500
