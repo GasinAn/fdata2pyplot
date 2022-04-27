@@ -6,7 +6,12 @@ module pyplot
     private
     integer, save :: txt_name_len = 1
     character(*), parameter :: py_file_name = 'plt.py'
-    public :: plt_init, plt_add_1d_data, plt_add_2d_data
+    public :: plt_init, plt_add_data
+
+    interface plt_add_data
+        module procedure plt_add_1d_data
+        module procedure plt_add_2d_data
+    end interface plt_add_data
 
     contains
 
