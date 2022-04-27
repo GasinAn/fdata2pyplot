@@ -40,28 +40,28 @@ program test
         end do
     end do
     call plt_init()
-    call plt_add_data('x', x)
-    call plt_add_data('y', y)
-    call plt_add_data('z', z, 'Gaussian')
+    call plt_add_data('X', x)
+    call plt_add_data('Y', y)
+    call plt_add_data('Z', z, 'Gaussian')
 end program test
 ```
 
-Fortran array x, y, z will be saved to x.txt, y.txt and Gaussian.txt.
+Fortran array x, y, z will be saved to X.txt, Y.txt and Gaussian.txt.
 
 A Python script (named plt.py) will be generated:
 
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
-x = np.loadtxt('x.txt')
-y = np.loadtxt('y.txt')
-z = np.loadtxt('Gaussian.txt')
+X = np.loadtxt('X.txt')
+Y = np.loadtxt('Y.txt')
+Z = np.loadtxt('Gaussian.txt')
 ```
 
 For example, if a "axis square contourf" is wanted, these can be added:
 
 ```python
-plt.contourf(x, y, z)
+plt.contourf(X, Y, Z)
 plt.axis('square')
 plt.show()
 ```

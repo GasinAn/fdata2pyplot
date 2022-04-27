@@ -12,7 +12,7 @@ program test
         end do
     end do
     call plt_init()
-    call plt_add_data('x', x)
-    call plt_add_data('y', y)
-    call plt_add_data('z', z, 'Gaussian')
+    call plt_add_data('X', x)
+    call plt_add_data('Y', y)
+    call plt_add_data('Z', z, 'Gaussian')
 end program test
