@@ -12,7 +12,6 @@ program test
             z(i,j) = exp(-x(i)**2.0_sp/2.0_sp)*exp(-y(j)**2.0_sp/2.0_sp)
         end do
     end do
-    call plt_init()
     call plt_add_data('X', x)
     call plt_add_data('Y', y)
     call plt_add_data('Z', z, 'Gaussian')
