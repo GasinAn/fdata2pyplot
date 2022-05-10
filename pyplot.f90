@@ -5,7 +5,7 @@ module pyplot
     implicit none
     private
     character(*), parameter :: py_file_name = 'plt.py'
-    public :: plt_init, plt_add_data
+    public :: plt_add_data
 
     interface plt_add_data
         module procedure plt_add_1d_real32_data
@@ -18,12 +18,16 @@ module pyplot
 
     contains
 
-        subroutine plt_init()
-            open(10, file=py_file_name)
-            write(10,'(A)') "import numpy as np"
-            write(10,'(A)') "import matplotlib.pyplot as plt"
-            close(10)
-        end subroutine plt_init
+        subroutine init()
+            logical, save :: initialized = .false.
+            if (.not.initialized) then
+                open(10, file=py_file_name)
+                write(10,'(A)') "import numpy as np"
+                write(10,'(A)') "import matplotlib.pyplot as plt"
+                close(10)
+                initialized = .true.
+            end if
+        end subroutine init
 
         subroutine plt_add_1d_real32_data(py_arr_name, fortran_arr, txt_name)
             character(*), intent(in) :: py_arr_name
@@ -34,6 +38,8 @@ module pyplot
             integer :: py_cmd_len
             character(:), allocatable :: txt_name_
             character(:), allocatable :: py_cmd
+
+            call init()
 
             if (present(txt_name)) then
                 txt_name_len_ = len(txt_name)
@@ -71,6 +77,8 @@ module pyplot
             character(:), allocatable :: txt_name_
             character(:), allocatable :: py_cmd
 
+            call init()
+
             if (present(txt_name)) then
                 txt_name_len_ = len(txt_name)
                 allocate(character(txt_name_len_) :: txt_name_)
@@ -106,6 +114,8 @@ module pyplot
             integer :: py_cmd_len
             character(:), allocatable :: txt_name_
             character(:), allocatable :: py_cmd
+
+            call init()
 
             if (present(txt_name)) then
                 txt_name_len_ = len(txt_name)
@@ -144,6 +154,8 @@ module pyplot
             integer :: py_cmd_len
             character(:), allocatable :: txt_name_
             character(:), allocatable :: py_cmd
+
+            call init()
 
             if (present(txt_name)) then
                 txt_name_len_ = len(txt_name)
@@ -186,6 +198,8 @@ module pyplot
             character(:), allocatable :: txt_name_
             character(:), allocatable :: py_cmd
 
+            call init()
+
             if (present(txt_name)) then
                 txt_name_len_ = len(txt_name)
                 allocate(character(txt_name_len_) :: txt_name_)
@@ -226,6 +240,8 @@ module pyplot
             integer :: py_cmd_len
             character(:), allocatable :: txt_name_
             character(:), allocatable :: py_cmd
+
+            call init()
 
             if (present(txt_name)) then
                 txt_name_len_ = len(txt_name)

@@ -4,16 +4,10 @@ A simple Fortran module for passing Fortran output to a Python script for later 
 ### Overview
 
 ```
-This module (named pyplot) now contains two subroutine:
-
-subroutine plt_init()
-Add these in Python script:
-    import numpy as np
-    import matplotlib.pyplot as plt
-No Parameters
-No Returns
+This module (named pyplot) now contains one public subroutine:
 
 subroutine plt_add_data(py_arr_name, fortran_arr, txt_name)
+Create a Python script which imports numpy and matplotlib.pyplot, if there is no such script
 Save Fortran array fortran_arr to file txt_name.txt
 Add this in Python script: py_arr_name = np.loadtxt('txt_name.txt')
 Parameters
