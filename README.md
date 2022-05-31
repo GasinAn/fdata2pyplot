@@ -62,6 +62,20 @@ plt.show()
 
 Then it will be able to run Python script for making figure.
 
+For convenience, py_arr_name, name of fortran_arr and txt_name can be made "the same". Here is an example.
+```fortran
+    call plt_add_data('x', x)
+    call plt_add_data('y', y)
+    call plt_add_data('z', z)
+```
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+x = np.loadtxt('x.txt')
+y = np.loadtxt('y.txt')
+z = np.loadtxt('z.txt')
+```
+
 ### See also
 
  * [Numpy](https://numpy.org/)
