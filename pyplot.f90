@@ -21,7 +21,8 @@ module pyplot
         subroutine init()
             logical, save :: initialized = .false.
             if (.not.initialized) then
-                open(10, action='WRITE', file=py_file_name)
+                open(10, file=py_file_name, status='REPLACE', &
+                     action='WRITE', position='APPEND')
                 write(10,'(A)') "import numpy as np"
                 write(10,'(A)') "import matplotlib.pyplot as plt"
                 close(10)
@@ -51,11 +52,13 @@ module pyplot
                 txt_name_ = py_arr_name
             end if
 
-            open(10, action='WRITE', file=txt_name_//'.txt')
+            open(10, file=txt_name_//'.txt', status='REPLACE', &
+                 action='WRITE', position='APPEND')
             write(10,*) fortran_arr
             close(10)
 
-            open(10, action='WRITE', file=py_file_name, position='APPEND')
+            open(10, file=py_file_name, status='OLD', &
+                 action='WRITE', position='APPEND')
             py_cmd_len = len(py_arr_name) + 15 + len(txt_name_) + 6
             allocate(character(py_cmd_len) :: py_cmd)
             py_cmd = py_arr_name//" = np.loadtxt('"//txt_name_//".txt')"
@@ -89,11 +92,13 @@ module pyplot
                 txt_name_ = py_arr_name
             end if
 
-            open(10, action='WRITE', file=txt_name_//'.txt')
+            open(10, file=txt_name_//'.txt', status='REPLACE', &
+                 action='WRITE', position='APPEND')
             write(10,*) fortran_arr
             close(10)
 
-            open(10, action='WRITE', file=py_file_name, position='APPEND')
+            open(10, file=py_file_name, status='OLD', &
+                 action='WRITE', position='APPEND')
             py_cmd_len = len(py_arr_name) + 15 + len(txt_name_) + 6
             allocate(character(py_cmd_len) :: py_cmd)
             py_cmd = py_arr_name//" = np.loadtxt('"//txt_name_//".txt')"
@@ -127,11 +132,13 @@ module pyplot
                 txt_name_ = py_arr_name
             end if
 
-            open(10, action='WRITE', file=txt_name_//'.txt')
+            open(10, file=txt_name_//'.txt', status='REPLACE', &
+                 action='WRITE', position='APPEND')
             write(10,*) fortran_arr
             close(10)
 
-            open(10, action='WRITE', file=py_file_name, position='APPEND')
+            open(10, file=py_file_name, status='OLD', &
+                 action='WRITE', position='APPEND')
             py_cmd_len = len(py_arr_name) + 15 + len(txt_name_) + 6
             allocate(character(py_cmd_len) :: py_cmd)
             py_cmd = py_arr_name//" = np.loadtxt('"//txt_name_//".txt')"
@@ -167,14 +174,16 @@ module pyplot
                 txt_name_ = py_arr_name
             end if
 
-            open(10, action='WRITE', file=txt_name_//'.txt')
+            open(10, file=txt_name_//'.txt', status='REPLACE', &
+                 action='WRITE', position='APPEND')
             fortran_arr_shape = shape(fortran_arr)
             do i = 1, fortran_arr_shape(1)
                 write(10,*) fortran_arr(i,:)
             end do
             close(10)
 
-            open(10, action='WRITE', file=py_file_name, position='APPEND')
+            open(10, file=py_file_name, status='OLD', &
+                 action='WRITE', position='APPEND')
             py_cmd_len = len(py_arr_name) + 15 + len(txt_name_) + 6
             allocate(character(py_cmd_len) :: py_cmd)
             py_cmd = py_arr_name//" = np.loadtxt('"//txt_name_//".txt')"
@@ -210,14 +219,16 @@ module pyplot
                 txt_name_ = py_arr_name
             end if
 
-            open(10, action='WRITE', file=txt_name_//'.txt')
+            open(10, file=txt_name_//'.txt', status='REPLACE', &
+                 action='WRITE', position='APPEND')
             fortran_arr_shape = shape(fortran_arr)
             do i = 1, fortran_arr_shape(1)
                 write(10,*) fortran_arr(i,:)
             end do
             close(10)
 
-            open(10, action='WRITE', file=py_file_name, position='APPEND')
+            open(10, file=py_file_name, status='OLD', &
+                 action='WRITE', position='APPEND')
             py_cmd_len = len(py_arr_name) + 15 + len(txt_name_) + 6
             allocate(character(py_cmd_len) :: py_cmd)
             py_cmd = py_arr_name//" = np.loadtxt('"//txt_name_//".txt')"
@@ -253,14 +264,16 @@ module pyplot
                 txt_name_ = py_arr_name
             end if
 
-            open(10, action='WRITE', file=txt_name_//'.txt')
+            open(10, file=txt_name_//'.txt', status='REPLACE', &
+                 action='WRITE', position='APPEND')
             fortran_arr_shape = shape(fortran_arr)
             do i = 1, fortran_arr_shape(1)
                 write(10,*) fortran_arr(i,:)
             end do
             close(10)
 
-            open(10, action='WRITE', file=py_file_name, position='APPEND')
+            open(10, file=py_file_name, status='OLD', &
+                 action='WRITE', position='APPEND')
             py_cmd_len = len(py_arr_name) + 15 + len(txt_name_) + 6
             allocate(character(py_cmd_len) :: py_cmd)
             py_cmd = py_arr_name//" = np.loadtxt('"//txt_name_//".txt')"
