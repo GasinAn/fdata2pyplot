@@ -1,6 +1,6 @@
 program test
     use iso_fortran_env, only: sp => real32, dp => real64
-    use pyplot
+    use fdata2pyplot
     implicit none
     integer :: i, j
     real(sp) :: x(-500:500), y(-500:500)

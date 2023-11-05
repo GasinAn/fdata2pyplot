@@ -1,10 +1,10 @@
-# plt-fortran
+# fdata2pyplot
 A simple Fortran module for passing Fortran output to a Python script for later using Matplotlib to make figure
 
 ### Overview
 
 ```
-This module (named pyplot) now contains one public subroutine:
+This module (named fdata2pyplot) now contains one public subroutine:
 
 subroutine plt_add_data(py_arr_name, fortran_arr, txt_name)
 Create a Python script which imports numpy as np and matplotlib.pyplot as plt, if there is no such script
@@ -22,7 +22,7 @@ No Returns
 ```fortran
 program test
     use iso_fortran_env, only: sp => real32, dp => real64
-    use pyplot
+    use fdata2pyplot
     implicit none
     integer :: i, j
     real(sp) :: x(-500:500), y(-500:500)

@@ -1,4 +1,4 @@
-module pyplot
+module fdata2pyplot
 
     use iso_fortran_env, only: real32, real64, real128
 
@@ -285,4 +285,4 @@ module pyplot
 
         end subroutine plt_add_2d_real128_data
 
-end module pyplot
+end module fdata2pyplot
