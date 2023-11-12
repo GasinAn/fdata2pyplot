@@ -1,4 +1,5 @@
 # fdata2pyplot
+
 A simple Fortran module for passing Fortran output to a Python script for later using Matplotlib to make figure
 
 ### Overview
@@ -6,7 +7,7 @@ A simple Fortran module for passing Fortran output to a Python script for later 
 ```
 This module (named fdata2pyplot) now contains one public subroutine:
 
-subroutine plt_add_data(py_arr_name, fortran_arr, txt_name)
+subroutine fdata2pyplot_pass_data(py_arr_name, fortran_arr, txt_name)
 Create a Python script which imports numpy as np and matplotlib.pyplot as plt, if there is no such script
 Save Fortran array fortran_arr to file txt_name.txt
 Add this in Python script: py_arr_name = np.loadtxt('txt_name.txt')
@@ -34,9 +35,9 @@ program test
             z(i,j) = exp(-x(i)**2.0_sp/2.0_sp)*exp(-y(j)**2.0_sp/2.0_sp)
         end do
     end do
-    call plt_add_data('X', x)
-    call plt_add_data('Y', y)
-    call plt_add_data('Z', z, 'Gaussian')
+    call fdata2pyplot_pass_data('X', x)
+    call fdata2pyplot_pass_data('Y', y)
+    call fdata2pyplot_pass_data('Z', z, 'Gaussian')
 end program test
 ```
 
@@ -64,9 +65,9 @@ Then it will be able to run Python script for making figure.
 
 For convenience, py_arr_name, name of fortran_arr and txt_name can be made "the same". Here is an example.
 ```fortran
-    call plt_add_data('x', x)
-    call plt_add_data('y', y)
-    call plt_add_data('z', z)
+    call fdata2pyplot_pass_data('x', x)
+    call fdata2pyplot_pass_data('y', y)
+    call fdata2pyplot_pass_data('z', z)
 ```
 ```python
 import numpy as np

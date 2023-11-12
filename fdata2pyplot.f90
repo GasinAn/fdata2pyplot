@@ -5,16 +5,16 @@ module fdata2pyplot
     implicit none
     private
     character(*), parameter :: py_file_name = 'plt.py'
-    public :: plt_add_data
+    public :: fdata2pyplot_pass_data
 
-    interface plt_add_data
-        module procedure plt_add_1d_real32_data
-        module procedure plt_add_1d_real64_data
-        module procedure plt_add_1d_real128_data
-        module procedure plt_add_2d_real32_data
-        module procedure plt_add_2d_real64_data
-        module procedure plt_add_2d_real128_data
-    end interface plt_add_data
+    interface fdata2pyplot_pass_data
+        module procedure fdata2pyplot_pass_1d_real32_data
+        module procedure fdata2pyplot_pass_1d_real64_data
+        module procedure fdata2pyplot_pass_1d_real128_data
+        module procedure fdata2pyplot_pass_2d_real32_data
+        module procedure fdata2pyplot_pass_2d_real64_data
+        module procedure fdata2pyplot_pass_2d_real128_data
+    end interface fdata2pyplot_pass_data
 
     contains
 
@@ -30,7 +30,7 @@ module fdata2pyplot
             end if
         end subroutine init
 
-        subroutine plt_add_1d_real32_data(py_arr_name, fortran_arr, txt_name)
+        subroutine fdata2pyplot_pass_1d_real32_data(py_arr_name, fortran_arr, txt_name)
             character(*), intent(in) :: py_arr_name
             real(real32), intent(in) :: fortran_arr(:)
             character(*), intent(in), optional :: txt_name
@@ -68,9 +68,9 @@ module fdata2pyplot
 
             deallocate(txt_name_)
 
-        end subroutine plt_add_1d_real32_data
+        end subroutine fdata2pyplot_pass_1d_real32_data
 
-        subroutine plt_add_1d_real64_data(py_arr_name, fortran_arr, txt_name)
+        subroutine fdata2pyplot_pass_1d_real64_data(py_arr_name, fortran_arr, txt_name)
             character(*), intent(in) :: py_arr_name
             real(real64), intent(in) :: fortran_arr(:)
             character(*), intent(in), optional :: txt_name
@@ -108,9 +108,9 @@ module fdata2pyplot
 
             deallocate(txt_name_)
 
-        end subroutine plt_add_1d_real64_data
+        end subroutine fdata2pyplot_pass_1d_real64_data
 
-        subroutine plt_add_1d_real128_data(py_arr_name, fortran_arr, txt_name)
+        subroutine fdata2pyplot_pass_1d_real128_data(py_arr_name, fortran_arr, txt_name)
             character(*), intent(in) :: py_arr_name
             real(real128), intent(in) :: fortran_arr(:)
             character(*), intent(in), optional :: txt_name
@@ -148,9 +148,9 @@ module fdata2pyplot
 
             deallocate(txt_name_)
 
-        end subroutine plt_add_1d_real128_data
+        end subroutine fdata2pyplot_pass_1d_real128_data
 
-        subroutine plt_add_2d_real32_data(py_arr_name, fortran_arr, txt_name)
+        subroutine fdata2pyplot_pass_2d_real32_data(py_arr_name, fortran_arr, txt_name)
             character(*), intent(in) :: py_arr_name
             real(real32), intent(in) :: fortran_arr(:,:)
             character(*), intent(in), optional :: txt_name
@@ -193,9 +193,9 @@ module fdata2pyplot
 
             deallocate(txt_name_)
 
-        end subroutine plt_add_2d_real32_data
+        end subroutine fdata2pyplot_pass_2d_real32_data
 
-        subroutine plt_add_2d_real64_data(py_arr_name, fortran_arr, txt_name)
+        subroutine fdata2pyplot_pass_2d_real64_data(py_arr_name, fortran_arr, txt_name)
             character(*), intent(in) :: py_arr_name
             real(real64), intent(in) :: fortran_arr(:,:)
             character(*), intent(in), optional :: txt_name
@@ -238,9 +238,9 @@ module fdata2pyplot
 
             deallocate(txt_name_)
 
-        end subroutine plt_add_2d_real64_data
+        end subroutine fdata2pyplot_pass_2d_real64_data
 
-        subroutine plt_add_2d_real128_data(py_arr_name, fortran_arr, txt_name)
+        subroutine fdata2pyplot_pass_2d_real128_data(py_arr_name, fortran_arr, txt_name)
             character(*), intent(in) :: py_arr_name
             real(real128), intent(in) :: fortran_arr(:,:)
             character(*), intent(in), optional :: txt_name
@@ -283,6 +283,6 @@ module fdata2pyplot
 
             deallocate(txt_name_)
 
-        end subroutine plt_add_2d_real128_data
+        end subroutine fdata2pyplot_pass_2d_real128_data
 
 end module fdata2pyplot
