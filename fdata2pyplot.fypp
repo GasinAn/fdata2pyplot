@@ -1,0 +1,90 @@
+module fdata2pyplot
+
+    use iso_fortran_env, only: real32, real64, real128
+
+    implicit none
+    private
+    character(*), parameter :: py_file_name = 'plt.py'
+    public :: fdata2pyplot_pass_data
+
+    interface fdata2pyplot_pass_data
+        #:for nd in ['1d', '2d']
+        #:for dtype in ['real32', 'real64', 'real128']
+        module procedure fdata2pyplot_pass_${nd}$_${dtype}$_data
+        #:endfor
+        #:endfor
+    end interface fdata2pyplot_pass_data
+
+    contains
+
+        subroutine init()
+            logical, save :: initialized = .false.
+            if (.not.initialized) then
+                open(10, file=py_file_name, status='REPLACE', action='WRITE', position='APPEND')
+                write(10,'(A)') "import numpy as np"
+                write(10,'(A)') "import matplotlib.pyplot as plt"
+                close(10)
+                initialized = .true.
+            end if
+        end subroutine init
+
+        #:for nd in ['1d', '2d']
+        #:for dtype in ['real32', 'real64', 'real128']
+        subroutine fdata2pyplot_pass_${nd}$_${dtype}$_data(py_arr_name, fortran_arr, txt_name)
+            character(*), intent(in) :: py_arr_name
+            #:if nd == '1d'
+            real(${dtype}$), intent(in) :: fortran_arr(:)
+            #:endif
+            #:if nd == '2d'
+            real(${dtype}$), intent(in) :: fortran_arr(:,:)
+            #:endif
+            character(*), intent(in), optional :: txt_name
+
+            #:if nd == '2d'
+            integer :: i
+            integer :: fortran_arr_shape(2)
+            #:endif
+            integer :: txt_name_len_
+            integer :: py_cmd_len
+            character(:), allocatable :: txt_name_
+            character(:), allocatable :: py_cmd
+
+            call init()
+
+            if (present(txt_name)) then
+                txt_name_len_ = len(txt_name)
+                allocate(character(txt_name_len_) :: txt_name_)
+                txt_name_ = txt_name
+            else
+                txt_name_len_ = len(py_arr_name)
+                allocate(character(txt_name_len_) :: txt_name_)
+                txt_name_ = py_arr_name
+            end if
+
+            open(10, file=txt_name_//'.txt', status='REPLACE', action='WRITE', position='APPEND')
+            #:if nd == '1d'
+            write(10,*) fortran_arr
+            #:endif
+            #:if nd == '2d'
+            fortran_arr_shape = shape(fortran_arr)
+            do i = 1, fortran_arr_shape(1)
+                write(10,*) fortran_arr(i,:)
+            end do
+            #:endif
+            close(10)
+
+            open(10, file=py_file_name, status='OLD', action='WRITE', position='APPEND')
+            py_cmd_len = len(py_arr_name) + len(" = np.loadtxt('") + len(txt_name_) + len(".txt')")
+            allocate(character(py_cmd_len) :: py_cmd)
+            py_cmd = py_arr_name//" = np.loadtxt('"//txt_name_//".txt')"
+            write(10,'(A)') py_cmd
+            deallocate(py_cmd)
+            close(10)
+
+            deallocate(txt_name_)
+
+        end subroutine fdata2pyplot_pass_${nd}$_${dtype}$_data
+
+        #:endfor
+        #:endfor
+end module fdata2pyplot
