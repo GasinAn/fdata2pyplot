@@ -34,20 +34,14 @@ module fdata2pyplot
             real(real32), intent(in) :: fortran_arr(:)
             character(*), intent(in), optional :: txt_name
 
-            integer :: txt_name_len_
-            integer :: py_cmd_len
             character(:), allocatable :: txt_name_
             character(:), allocatable :: py_cmd
 
             call init()
 
             if (present(txt_name)) then
-                txt_name_len_ = len(txt_name)
-                allocate(character(txt_name_len_) :: txt_name_)
                 txt_name_ = txt_name
             else
-                txt_name_len_ = len(py_arr_name)
-                allocate(character(txt_name_len_) :: txt_name_)
                 txt_name_ = py_arr_name
             end if
 
@@ -56,8 +50,6 @@ module fdata2pyplot
             close(10)
 
             open(10, file=py_file_name, status='OLD', action='WRITE', position='APPEND')
-            py_cmd_len = len(py_arr_name) + len(" = np.loadtxt('") + len(txt_name_) + len(".txt')")
-            allocate(character(py_cmd_len) :: py_cmd)
             py_cmd = py_arr_name//" = np.loadtxt('"//txt_name_//".txt')"
             write(10,'(A)') py_cmd
             deallocate(py_cmd)
@@ -72,20 +64,14 @@ module fdata2pyplot
             real(real64), intent(in) :: fortran_arr(:)
             character(*), intent(in), optional :: txt_name
 
-            integer :: txt_name_len_
-            integer :: py_cmd_len
             character(:), allocatable :: txt_name_
             character(:), allocatable :: py_cmd
 
             call init()
 
             if (present(txt_name)) then
-                txt_name_len_ = len(txt_name)
-                allocate(character(txt_name_len_) :: txt_name_)
                 txt_name_ = txt_name
             else
-                txt_name_len_ = len(py_arr_name)
-                allocate(character(txt_name_len_) :: txt_name_)
                 txt_name_ = py_arr_name
             end if
 
@@ -94,8 +80,6 @@ module fdata2pyplot
             close(10)
 
             open(10, file=py_file_name, status='OLD', action='WRITE', position='APPEND')
-            py_cmd_len = len(py_arr_name) + len(" = np.loadtxt('") + len(txt_name_) + len(".txt')")
-            allocate(character(py_cmd_len) :: py_cmd)
             py_cmd = py_arr_name//" = np.loadtxt('"//txt_name_//".txt')"
             write(10,'(A)') py_cmd
             deallocate(py_cmd)
@@ -110,20 +94,14 @@ module fdata2pyplot
             real(real128), intent(in) :: fortran_arr(:)
             character(*), intent(in), optional :: txt_name
 
-            integer :: txt_name_len_
-            integer :: py_cmd_len
             character(:), allocatable :: txt_name_
             character(:), allocatable :: py_cmd
 
             call init()
 
             if (present(txt_name)) then
-                txt_name_len_ = len(txt_name)
-                allocate(character(txt_name_len_) :: txt_name_)
                 txt_name_ = txt_name
             else
-                txt_name_len_ = len(py_arr_name)
-                allocate(character(txt_name_len_) :: txt_name_)
                 txt_name_ = py_arr_name
             end if
 
@@ -132,8 +110,6 @@ module fdata2pyplot
             close(10)
 
             open(10, file=py_file_name, status='OLD', action='WRITE', position='APPEND')
-            py_cmd_len = len(py_arr_name) + len(" = np.loadtxt('") + len(txt_name_) + len(".txt')")
-            allocate(character(py_cmd_len) :: py_cmd)
             py_cmd = py_arr_name//" = np.loadtxt('"//txt_name_//".txt')"
             write(10,'(A)') py_cmd
             deallocate(py_cmd)
@@ -150,20 +126,14 @@ module fdata2pyplot
 
             integer :: i
             integer :: fortran_arr_shape(2)
-            integer :: txt_name_len_
-            integer :: py_cmd_len
             character(:), allocatable :: txt_name_
             character(:), allocatable :: py_cmd
 
             call init()
 
             if (present(txt_name)) then
-                txt_name_len_ = len(txt_name)
-                allocate(character(txt_name_len_) :: txt_name_)
                 txt_name_ = txt_name
             else
-                txt_name_len_ = len(py_arr_name)
-                allocate(character(txt_name_len_) :: txt_name_)
                 txt_name_ = py_arr_name
             end if
 
@@ -175,8 +145,6 @@ module fdata2pyplot
             close(10)
 
             open(10, file=py_file_name, status='OLD', action='WRITE', position='APPEND')
-            py_cmd_len = len(py_arr_name) + len(" = np.loadtxt('") + len(txt_name_) + len(".txt')")
-            allocate(character(py_cmd_len) :: py_cmd)
             py_cmd = py_arr_name//" = np.loadtxt('"//txt_name_//".txt')"
             write(10,'(A)') py_cmd
             deallocate(py_cmd)
@@ -193,20 +161,14 @@ module fdata2pyplot
 
             integer :: i
             integer :: fortran_arr_shape(2)
-            integer :: txt_name_len_
-            integer :: py_cmd_len
             character(:), allocatable :: txt_name_
             character(:), allocatable :: py_cmd
 
             call init()
 
             if (present(txt_name)) then
-                txt_name_len_ = len(txt_name)
-                allocate(character(txt_name_len_) :: txt_name_)
                 txt_name_ = txt_name
             else
-                txt_name_len_ = len(py_arr_name)
-                allocate(character(txt_name_len_) :: txt_name_)
                 txt_name_ = py_arr_name
             end if
 
@@ -218,8 +180,6 @@ module fdata2pyplot
             close(10)
 
             open(10, file=py_file_name, status='OLD', action='WRITE', position='APPEND')
-            py_cmd_len = len(py_arr_name) + len(" = np.loadtxt('") + len(txt_name_) + len(".txt')")
-            allocate(character(py_cmd_len) :: py_cmd)
             py_cmd = py_arr_name//" = np.loadtxt('"//txt_name_//".txt')"
             write(10,'(A)') py_cmd
             deallocate(py_cmd)
@@ -236,20 +196,14 @@ module fdata2pyplot
 
             integer :: i
             integer :: fortran_arr_shape(2)
-            integer :: txt_name_len_
-            integer :: py_cmd_len
             character(:), allocatable :: txt_name_
             character(:), allocatable :: py_cmd
 
             call init()
 
             if (present(txt_name)) then
-                txt_name_len_ = len(txt_name)
-                allocate(character(txt_name_len_) :: txt_name_)
                 txt_name_ = txt_name
             else
-                txt_name_len_ = len(py_arr_name)
-                allocate(character(txt_name_len_) :: txt_name_)
                 txt_name_ = py_arr_name
             end if
 
@@ -261,8 +215,6 @@ module fdata2pyplot
             close(10)
 
             open(10, file=py_file_name, status='OLD', action='WRITE', position='APPEND')
-            py_cmd_len = len(py_arr_name) + len(" = np.loadtxt('") + len(txt_name_) + len(".txt')")
-            allocate(character(py_cmd_len) :: py_cmd)
             py_cmd = py_arr_name//" = np.loadtxt('"//txt_name_//".txt')"
             write(10,'(A)') py_cmd
             deallocate(py_cmd)
