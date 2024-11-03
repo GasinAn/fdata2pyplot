@@ -1,12 +1,12 @@
 module fdata2pyplot
 
     use iso_fortran_env, only: real32, real64, real128
-
     implicit none
     private
-    character(*), parameter :: py_file_name = 'plt.py'
-    public :: fdata2pyplot_pass_data
 
+    character(*), parameter :: py_file_name = 'plt.py'
+
+    public :: fdata2pyplot_pass_data
     interface fdata2pyplot_pass_data
         #:for nd in ['1d', '2d']
         #:for dtype in ['real32', 'real64', 'real128']
@@ -19,18 +19,20 @@ module fdata2pyplot
 
         subroutine init()
             logical, save :: initialized = .false.
-            if (.not.initialized) then
-                open(10, file=py_file_name, status='REPLACE', action='WRITE', position='APPEND')
-                write(10,'(A)') "import numpy as np"
-                write(10,'(A)') "import matplotlib.pyplot as plt"
-                close(10)
+            if (.not. initialized) then
+                open(unit=10, file=py_file_name, status='REPLACE', &
+                     action='WRITE', position='APPEND')
+                write(unit=10, fmt='(A)') "import numpy as np"
+                write(unit=10, fmt='(A)') "import matplotlib.pyplot as plt"
+                close(unit=10)
                 initialized = .true.
             end if
         end subroutine init
 
         #:for nd in ['1d', '2d']
         #:for dtype in ['real32', 'real64', 'real128']
-        subroutine fdata2pyplot_pass_${nd}$_${dtype}$_data(py_arr_name, fortran_arr, txt_name)
+        subroutine fdata2pyplot_pass_${nd}$_${dtype}$_data( &
+                       py_arr_name, fortran_arr, txt_name)
             character(*), intent(in) :: py_arr_name
             #:if nd == '1d'
             real(${dtype}$), intent(in) :: fortran_arr(:)
@@ -55,23 +57,25 @@ module fdata2pyplot
                 txt_name_ = py_arr_name
             end if
 
-            open(10, file=txt_name_//'.txt', status='REPLACE', action='WRITE', position='APPEND')
+            open(unit=10, file=txt_name_//'.txt', status='REPLACE', &
+                 action='WRITE', position='APPEND')
             #:if nd == '1d'
-            write(10,*) fortran_arr
+            write(unit=10, fmt=*) fortran_arr
             #:endif
             #:if nd == '2d'
             fortran_arr_shape = shape(fortran_arr)
             do i = 1, fortran_arr_shape(1)
-                write(10,*) fortran_arr(i,:)
+                write(unit=10, fmt=*) fortran_arr(i,:)
             end do
             #:endif
-            close(10)
+            close(unit=10)
 
-            open(10, file=py_file_name, status='OLD', action='WRITE', position='APPEND')
+            open(unit=10, file=py_file_name, status='OLD', &
+                 action='WRITE', position='APPEND')
             py_cmd = py_arr_name//" = np.loadtxt('"//txt_name_//".txt')"
-            write(10,'(A)') py_cmd
+            write(unit=10, fmt='(A)') py_cmd
             deallocate(py_cmd)
-            close(10)
+            close(unit=10)
 
             deallocate(txt_name_)
 
