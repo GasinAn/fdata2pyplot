@@ -18,14 +18,30 @@ module fdata2pyplot
 
     contains
 
+        function unopened_unit() result(unit)
+            integer :: unit
+            logical :: opened
+            unit = 10
+            do while (.true.)
+                inquire(unit=unit, opened=opened)
+                if (.not. opened) then
+                    exit
+                else
+                    unit = unit + 1
+                end if
+            end do
+        end function unopened_unit
+
         subroutine init()
+            integer :: unit
             logical, save :: initialized = .false.
             if (.not. initialized) then
-                open(unit=10, file=py_file_name, status='REPLACE', &
+                unit = unopened_unit()
+                open(unit=unit, file=py_file_name, status='REPLACE', &
                      action='WRITE', position='APPEND')
-                write(unit=10, fmt='(A)') "import numpy as np"
-                write(unit=10, fmt='(A)') "import matplotlib.pyplot as plt"
-                close(unit=10)
+                write(unit=unit, fmt='(A)') "import numpy as np"
+                write(unit=unit, fmt='(A)') "import matplotlib.pyplot as plt"
+                close(unit=unit)
                 initialized = .true.
             end if
         end subroutine init
@@ -36,6 +52,7 @@ module fdata2pyplot
             real(real32), intent(in) :: fortran_arr(:)
             character(*), intent(in), optional :: txt_name
 
+            integer :: unit
             character(:), allocatable :: txt_name_
             character(:), allocatable :: py_cmd
 
@@ -47,17 +64,19 @@ module fdata2pyplot
                 txt_name_ = py_arr_name
             end if
 
-            open(unit=10, file=txt_name_//'.txt', status='REPLACE', &
+            unit = unopened_unit()
+            open(unit=unit, file=txt_name_//'.txt', status='REPLACE', &
                  action='WRITE', position='APPEND')
-            write(unit=10, fmt=*) fortran_arr
-            close(unit=10)
+            write(unit=unit, fmt=*) fortran_arr
+            close(unit=unit)
 
-            open(unit=10, file=py_file_name, status='OLD', &
+            unit = unopened_unit()
+            open(unit=unit, file=py_file_name, status='OLD', &
                  action='WRITE', position='APPEND')
             py_cmd = py_arr_name//" = np.loadtxt('"//txt_name_//".txt')"
-            write(unit=10, fmt='(A)') py_cmd
+            write(unit=unit, fmt='(A)') py_cmd
             deallocate(py_cmd)
-            close(unit=10)
+            close(unit=unit)
 
             deallocate(txt_name_)
 
@@ -69,6 +88,7 @@ module fdata2pyplot
             real(real64), intent(in) :: fortran_arr(:)
             character(*), intent(in), optional :: txt_name
 
+            integer :: unit
             character(:), allocatable :: txt_name_
             character(:), allocatable :: py_cmd
 
@@ -80,17 +100,19 @@ module fdata2pyplot
                 txt_name_ = py_arr_name
             end if
 
-            open(unit=10, file=txt_name_//'.txt', status='REPLACE', &
+            unit = unopened_unit()
+            open(unit=unit, file=txt_name_//'.txt', status='REPLACE', &
                  action='WRITE', position='APPEND')
-            write(unit=10, fmt=*) fortran_arr
-            close(unit=10)
+            write(unit=unit, fmt=*) fortran_arr
+            close(unit=unit)
 
-            open(unit=10, file=py_file_name, status='OLD', &
+            unit = unopened_unit()
+            open(unit=unit, file=py_file_name, status='OLD', &
                  action='WRITE', position='APPEND')
             py_cmd = py_arr_name//" = np.loadtxt('"//txt_name_//".txt')"
-            write(unit=10, fmt='(A)') py_cmd
+            write(unit=unit, fmt='(A)') py_cmd
             deallocate(py_cmd)
-            close(unit=10)
+            close(unit=unit)
 
             deallocate(txt_name_)
 
@@ -102,6 +124,7 @@ module fdata2pyplot
             real(real128), intent(in) :: fortran_arr(:)
             character(*), intent(in), optional :: txt_name
 
+            integer :: unit
             character(:), allocatable :: txt_name_
             character(:), allocatable :: py_cmd
 
@@ -113,17 +136,19 @@ module fdata2pyplot
                 txt_name_ = py_arr_name
             end if
 
-            open(unit=10, file=txt_name_//'.txt', status='REPLACE', &
+            unit = unopened_unit()
+            open(unit=unit, file=txt_name_//'.txt', status='REPLACE', &
                  action='WRITE', position='APPEND')
-            write(unit=10, fmt=*) fortran_arr
-            close(unit=10)
+            write(unit=unit, fmt=*) fortran_arr
+            close(unit=unit)
 
-            open(unit=10, file=py_file_name, status='OLD', &
+            unit = unopened_unit()
+            open(unit=unit, file=py_file_name, status='OLD', &
                  action='WRITE', position='APPEND')
             py_cmd = py_arr_name//" = np.loadtxt('"//txt_name_//".txt')"
-            write(unit=10, fmt='(A)') py_cmd
+            write(unit=unit, fmt='(A)') py_cmd
             deallocate(py_cmd)
-            close(unit=10)
+            close(unit=unit)
 
             deallocate(txt_name_)
 
@@ -135,6 +160,7 @@ module fdata2pyplot
             real(real32), intent(in) :: fortran_arr(:,:)
             character(*), intent(in), optional :: txt_name
 
+            integer :: unit
             integer :: i
             integer :: fortran_arr_shape(2)
             character(:), allocatable :: txt_name_
@@ -148,20 +174,22 @@ module fdata2pyplot
                 txt_name_ = py_arr_name
             end if
 
-            open(unit=10, file=txt_name_//'.txt', status='REPLACE', &
+            unit = unopened_unit()
+            open(unit=unit, file=txt_name_//'.txt', status='REPLACE', &
                  action='WRITE', position='APPEND')
             fortran_arr_shape = shape(fortran_arr)
             do i = 1, fortran_arr_shape(1)
-                write(unit=10, fmt=*) fortran_arr(i,:)
+                write(unit=unit, fmt=*) fortran_arr(i,:)
             end do
-            close(unit=10)
+            close(unit=unit)
 
-            open(unit=10, file=py_file_name, status='OLD', &
+            unit = unopened_unit()
+            open(unit=unit, file=py_file_name, status='OLD', &
                  action='WRITE', position='APPEND')
             py_cmd = py_arr_name//" = np.loadtxt('"//txt_name_//".txt')"
-            write(unit=10, fmt='(A)') py_cmd
+            write(unit=unit, fmt='(A)') py_cmd
             deallocate(py_cmd)
-            close(unit=10)
+            close(unit=unit)
 
             deallocate(txt_name_)
 
@@ -173,6 +201,7 @@ module fdata2pyplot
             real(real64), intent(in) :: fortran_arr(:,:)
             character(*), intent(in), optional :: txt_name
 
+            integer :: unit
             integer :: i
             integer :: fortran_arr_shape(2)
             character(:), allocatable :: txt_name_
@@ -186,20 +215,22 @@ module fdata2pyplot
                 txt_name_ = py_arr_name
             end if
 
-            open(unit=10, file=txt_name_//'.txt', status='REPLACE', &
+            unit = unopened_unit()
+            open(unit=unit, file=txt_name_//'.txt', status='REPLACE', &
                  action='WRITE', position='APPEND')
             fortran_arr_shape = shape(fortran_arr)
             do i = 1, fortran_arr_shape(1)
-                write(unit=10, fmt=*) fortran_arr(i,:)
+                write(unit=unit, fmt=*) fortran_arr(i,:)
             end do
-            close(unit=10)
+            close(unit=unit)
 
-            open(unit=10, file=py_file_name, status='OLD', &
+            unit = unopened_unit()
+            open(unit=unit, file=py_file_name, status='OLD', &
                  action='WRITE', position='APPEND')
             py_cmd = py_arr_name//" = np.loadtxt('"//txt_name_//".txt')"
-            write(unit=10, fmt='(A)') py_cmd
+            write(unit=unit, fmt='(A)') py_cmd
             deallocate(py_cmd)
-            close(unit=10)
+            close(unit=unit)
 
             deallocate(txt_name_)
 
@@ -211,6 +242,7 @@ module fdata2pyplot
             real(real128), intent(in) :: fortran_arr(:,:)
             character(*), intent(in), optional :: txt_name
 
+            integer :: unit
             integer :: i
             integer :: fortran_arr_shape(2)
             character(:), allocatable :: txt_name_
@@ -224,20 +256,22 @@ module fdata2pyplot
                 txt_name_ = py_arr_name
             end if
 
-            open(unit=10, file=txt_name_//'.txt', status='REPLACE', &
+            unit = unopened_unit()
+            open(unit=unit, file=txt_name_//'.txt', status='REPLACE', &
                  action='WRITE', position='APPEND')
             fortran_arr_shape = shape(fortran_arr)
             do i = 1, fortran_arr_shape(1)
-                write(unit=10, fmt=*) fortran_arr(i,:)
+                write(unit=unit, fmt=*) fortran_arr(i,:)
             end do
-            close(unit=10)
+            close(unit=unit)
 
-            open(unit=10, file=py_file_name, status='OLD', &
+            unit = unopened_unit()
+            open(unit=unit, file=py_file_name, status='OLD', &
                  action='WRITE', position='APPEND')
             py_cmd = py_arr_name//" = np.loadtxt('"//txt_name_//".txt')"
-            write(unit=10, fmt='(A)') py_cmd
+            write(unit=unit, fmt='(A)') py_cmd
             deallocate(py_cmd)
-            close(unit=10)
+            close(unit=unit)
 
             deallocate(txt_name_)
 
