@@ -2,32 +2,26 @@
 
 A simple Fortran module for passing Fortran output to a Python script for later using Matplotlib to make figure
 
-### Overview
+## Philosophy
 
-```
-This module (named fdata2pyplot) now contains one public subroutine:
+Fortran is weak in making figure, while Matplotlib is strong in making figure. It is not necessary to reinvent a Fortran wheel of making figure, instead, a simple way to remedy the weakness of Fortran is building a simple bridge from Fortran to Matplotlib.
 
-subroutine fdata2pyplot_pass_data(py_arr_name, fortran_arr, txt_name)
-Create a Python script which imports numpy as np and matplotlib.pyplot as plt, if there is no such script
-Save Fortran array fortran_arr to file txt_name.txt
-Add this in Python script: py_arr_name = np.loadtxt('txt_name.txt')
-Parameters
-    py_arr_name: character
-    fortran_arr: 1d or 2d real array (any kind in iso_fortran_env)
-    txt_name: character, optional (default: py_arr_name)
-No Returns
-```
+## Overview
 
-### Example
+The module `fdata2pyplot` is defined in `src/fdata2pyplot.f90`. Three public subroutines `fdata2pyplot_pass_data`, `fdata2pyplot_add_others` and `fdata2pyplot_plt` are defined in it.
+
+## Example
 
 ```fortran
 program test
     use iso_fortran_env, only: sp => real32, dp => real64
     use fdata2pyplot
+
     implicit none
     integer :: i, j
     real(sp) :: x(-500:500), y(-500:500)
     real(dp) :: z(-500:500, -500:500)
+
     x = [(real(i, sp), i=-500, 500)] / 500.0_sp * 3.0_sp
     y = [(real(j, sp), j=-500, 500)] / 500.0_sp * 3.0_sp
     do i = -500, 500
@@ -35,49 +29,54 @@ program test
             z(i, j) = exp(-x(i)**2.0_sp/2.0_sp) * exp(-y(j)**2.0_sp/2.0_sp)
         end do
     end do
-    call fdata2pyplot_pass_data('X', x)
-    call fdata2pyplot_pass_data('Y', y)
-    call fdata2pyplot_pass_data('Z', z, 'Gaussian')
+
+    call fdata2pyplot_pass_data(x, "X")
+    call fdata2pyplot_pass_data(y, "Y")
+    call fdata2pyplot_pass_data(z, "Z", "Gaussian")
+    call fdata2pyplot_add_others("plt.contourf(X, Y, Z)")
+    call fdata2pyplot_add_others("plt.axis('square')")
+    call fdata2pyplot_add_others("plt.show()")
+    call fdata2pyplot_plt()
 end program test
 ```
 
-Fortran array x, y, z will be saved to X.txt, Y.txt and Gaussian.txt.
+After running this program:
 
-A Python script (named plt.py) will be generated:
+1. Fortran arrays `x`, `y`, `z` will be saved to `X.txt`, `Y.txt` and `Gaussian.txt` respectively;
 
+2. A Python script named `plt.py` will be generated, and it contains:
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
 X = np.loadtxt('X.txt')
 Y = np.loadtxt('Y.txt')
 Z = np.loadtxt('Gaussian.txt')
-```
-
-For example, if a "axis square contourf" is wanted, these can be added:
-
-```python
 plt.contourf(X, Y, Z)
 plt.axis('square')
 plt.show()
 ```
 
-Then it will be able to run Python script for making figure.
+3. The Python script `plt.py` will be run for making figure.
 
-For convenience, py_arr_name, name of fortran_arr and txt_name can be made "the same". Here is an example.
+## Tips
+
+1. `fdata2pyplot_pass_data` has three dummy arguments: `fortran_arr`, `py_arr_name`, and optional `txt_name`. For convenience, You can only associate `fortran_arr` and `py_arr_name` with effective arguments, and make `py_arr_name` be the name of `fortran_arr`. For example, you can run:
 ```fortran
-    call fdata2pyplot_pass_data('x', x)
-    call fdata2pyplot_pass_data('y', y)
-    call fdata2pyplot_pass_data('z', z)
-```
-```python
-import numpy as np
-import matplotlib.pyplot as plt
-x = np.loadtxt('x.txt')
-y = np.loadtxt('y.txt')
-z = np.loadtxt('z.txt')
+    call fdata2pyplot_pass_data(x, "x")
+    call fdata2pyplot_pass_data(y, "y")
+    call fdata2pyplot_pass_data(z, "z")
 ```
 
-### See also
+2. In the above example, I called `fdata2pyplot_add_others` several times, which seems to be cumbersome. However, since different operating systems use different line-break characters, I have to do it like this to make the example be safely cross-platform. If you are sure that you will not meet with this trouble, you can call `fdata2pyplot_add_others` one time for adding all "others". For example, if you will only run the program on a Unix-like platform, you can run:
+```fortran
+    call fdata2pyplot_add_others("plt.contourf(X, Y, Z)"//new_line('A')// &
+                                 "plt.axis('square')"//new_line('A')// &
+                                 "plt.show()")
+```
+
+3. Usually we don't know how to make the clearest figure. You need not call `fdata2pyplot_add_others` and `fdata2pyplot_plt`. You can only call `fdata2pyplot_pass_data`, and then modify and run `plt.py` by hand to try different methods of making figure.
+
+## See also
 
  * [Numpy](https://numpy.org/)
  * [Matplotlib](https://matplotlib.org)
