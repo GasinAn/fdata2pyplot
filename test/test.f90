@@ -12,9 +12,9 @@ program test
             z(i, j) = exp(-x(i)**2.0_sp/2.0_sp) * exp(-y(j)**2.0_sp/2.0_sp)
         end do
     end do
-    call fdata2pyplot_pass_data('X', x)
-    call fdata2pyplot_pass_data('Y', y)
-    call fdata2pyplot_pass_data('Z', z, 'Gaussian')
+    call fdata2pyplot_pass_data("X", x)
+    call fdata2pyplot_pass_data("Y", y)
+    call fdata2pyplot_pass_data("Z", z, "Gaussian")
     call fdata2pyplot_add_others("plt.contourf(X, Y, Z)")
     call fdata2pyplot_add_others("plt.axis('square')")
     call fdata2pyplot_add_others("plt.show()")
