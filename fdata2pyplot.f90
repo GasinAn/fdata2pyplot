@@ -6,7 +6,7 @@ module fdata2pyplot
 
     character(*), parameter :: py_file_name = 'plt.py'
 
-    public :: fdata2pyplot_pass_data
+    public :: fdata2pyplot_pass_data, fdata2pyplot_add_others
     interface fdata2pyplot_pass_data
         module procedure fdata2pyplot_pass_1d_real32_data
         module procedure fdata2pyplot_pass_1d_real64_data
@@ -277,4 +277,13 @@ module fdata2pyplot
 
         end subroutine fdata2pyplot_pass_2d_real128_data
 
+        subroutine fdata2pyplot_add_others(others)
+            character(*), intent(in) :: others
+            integer :: unit
+            unit = unopened_unit()
+            open(unit=unit, file=py_file_name, status='OLD', &
+                 action='WRITE', position='APPEND')
+            write(unit=unit, fmt='(A)') others
+            close(unit=unit)
+        end subroutine fdata2pyplot_add_others
 end module fdata2pyplot

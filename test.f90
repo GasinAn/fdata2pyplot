@@ -15,4 +15,8 @@ program test
     call fdata2pyplot_pass_data('X', x)
     call fdata2pyplot_pass_data('Y', y)
     call fdata2pyplot_pass_data('Z', z, 'Gaussian')
+    call fdata2pyplot_add_others("plt.contourf(X, Y, Z)")
+    call fdata2pyplot_add_others("plt.axis('square')")
+    call fdata2pyplot_add_others("plt.show()")
+    call execute_command_line("python plt.py")
 end program test
