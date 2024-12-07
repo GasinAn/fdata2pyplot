@@ -21,5 +21,5 @@ program test
     call fdata2pyplot_add_others("plt.contourf(X, Y, Z)")
     call fdata2pyplot_add_others("plt.axis('square')")
     call fdata2pyplot_add_others("plt.show()")
-    call execute_command_line("python plt.py")
+    call fdata2pyplot_plt()
 end program test

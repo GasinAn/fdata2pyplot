@@ -112,4 +112,10 @@ module fdata2pyplot
             write(unit=unit, fmt='(A)') others
             close(unit=unit)
         end subroutine fdata2pyplot_add_others
+
+        subroutine fdata2pyplot_plt()
+            call init()
+            call execute_command_line("python plt.py")
+        end subroutine fdata2pyplot_plt
+
 end module fdata2pyplot
