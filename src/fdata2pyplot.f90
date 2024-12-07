@@ -47,9 +47,9 @@ module fdata2pyplot
         end subroutine init
 
         subroutine fdata2pyplot_pass_1d_real32_data( &
-                       py_arr_name, fortran_arr, txt_name)
-            character(*), intent(in) :: py_arr_name
+                       fortran_arr, py_arr_name, txt_name)
             real(real32), intent(in) :: fortran_arr(:)
+            character(*), intent(in) :: py_arr_name
             character(*), intent(in), optional :: txt_name
 
             integer :: unit
@@ -83,9 +83,9 @@ module fdata2pyplot
         end subroutine fdata2pyplot_pass_1d_real32_data
 
         subroutine fdata2pyplot_pass_1d_real64_data( &
-                       py_arr_name, fortran_arr, txt_name)
-            character(*), intent(in) :: py_arr_name
+                       fortran_arr, py_arr_name, txt_name)
             real(real64), intent(in) :: fortran_arr(:)
+            character(*), intent(in) :: py_arr_name
             character(*), intent(in), optional :: txt_name
 
             integer :: unit
@@ -119,9 +119,9 @@ module fdata2pyplot
         end subroutine fdata2pyplot_pass_1d_real64_data
 
         subroutine fdata2pyplot_pass_1d_real128_data( &
-                       py_arr_name, fortran_arr, txt_name)
-            character(*), intent(in) :: py_arr_name
+                       fortran_arr, py_arr_name, txt_name)
             real(real128), intent(in) :: fortran_arr(:)
+            character(*), intent(in) :: py_arr_name
             character(*), intent(in), optional :: txt_name
 
             integer :: unit
@@ -155,9 +155,9 @@ module fdata2pyplot
         end subroutine fdata2pyplot_pass_1d_real128_data
 
         subroutine fdata2pyplot_pass_2d_real32_data( &
-                       py_arr_name, fortran_arr, txt_name)
-            character(*), intent(in) :: py_arr_name
+                       fortran_arr, py_arr_name, txt_name)
             real(real32), intent(in) :: fortran_arr(:,:)
+            character(*), intent(in) :: py_arr_name
             character(*), intent(in), optional :: txt_name
 
             integer :: unit
@@ -196,9 +196,9 @@ module fdata2pyplot
         end subroutine fdata2pyplot_pass_2d_real32_data
 
         subroutine fdata2pyplot_pass_2d_real64_data( &
-                       py_arr_name, fortran_arr, txt_name)
-            character(*), intent(in) :: py_arr_name
+                       fortran_arr, py_arr_name, txt_name)
             real(real64), intent(in) :: fortran_arr(:,:)
+            character(*), intent(in) :: py_arr_name
             character(*), intent(in), optional :: txt_name
 
             integer :: unit
@@ -237,9 +237,9 @@ module fdata2pyplot
         end subroutine fdata2pyplot_pass_2d_real64_data
 
         subroutine fdata2pyplot_pass_2d_real128_data( &
-                       py_arr_name, fortran_arr, txt_name)
-            character(*), intent(in) :: py_arr_name
+                       fortran_arr, py_arr_name, txt_name)
             real(real128), intent(in) :: fortran_arr(:,:)
+            character(*), intent(in) :: py_arr_name
             character(*), intent(in), optional :: txt_name
 
             integer :: unit

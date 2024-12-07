@@ -6,7 +6,7 @@ module fdata2pyplot
 
     character(*), parameter :: py_file_name = 'plt.py'
 
-    public :: fdata2pyplot_pass_data, fdata2pyplot_add_others
+    public :: fdata2pyplot_pass_data, fdata2pyplot_add_others, fdata2pyplot_plt
     interface fdata2pyplot_pass_data
         #:for nd in ['1d', '2d']
         #:for dtype in ['real32', 'real64', 'real128']
@@ -48,14 +48,14 @@ module fdata2pyplot
         #:for nd in ['1d', '2d']
         #:for dtype in ['real32', 'real64', 'real128']
         subroutine fdata2pyplot_pass_${nd}$_${dtype}$_data( &
-                       py_arr_name, fortran_arr, txt_name)
-            character(*), intent(in) :: py_arr_name
+                       fortran_arr, py_arr_name, txt_name)
             #:if nd == '1d'
             real(${dtype}$), intent(in) :: fortran_arr(:)
             #:endif
             #:if nd == '2d'
             real(${dtype}$), intent(in) :: fortran_arr(:,:)
             #:endif
+            character(*), intent(in) :: py_arr_name
             character(*), intent(in), optional :: txt_name
 
             integer :: unit
