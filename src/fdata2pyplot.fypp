@@ -105,6 +105,7 @@ module fdata2pyplot
         subroutine fdata2pyplot_add_others(others)
             character(*), intent(in) :: others
             integer :: unit
+            call init()
             unit = unopened_unit()
             open(unit=unit, file=py_file_name, status='OLD', &
                  action='WRITE', position='APPEND')
