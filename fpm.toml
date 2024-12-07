@@ -1,0 +1,18 @@
+name = "fdata2pyplot"
+version = "0.1.0"
+license = "license"
+author = "GasinAn"
+maintainer = "gasin185@163.com"
+copyright = "Copyright 2024, GasinAn"
+[build]
+auto-executables = true
+auto-tests = true
+auto-examples = true
+module-naming = false
+[install]
+library = false
+[fortran]
+implicit-typing = false
+implicit-external = false
+source-form = "free"
+
